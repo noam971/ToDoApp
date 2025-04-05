@@ -28,14 +28,25 @@ A secure and scalable task management backend built with **Node.js**, **Express*
 
 ## Getting Started
 
-### 1. Clone the repository
+### 1. Prerequisites
+
+Make sure you have **Docker Desktop** installed:  
+[Download Docker](https://www.docker.com/products/docker-desktop/)
+
+Docker is required to run both the PostgreSQL database and the backend server in isolated containers.
+
+---
+
+### 2. Clone the repository
 
 ```bash
 git clone https://github.com/yourusername/todo-backend.git
 cd todo-backend
 ```
 
-### 2. Create a `.env` file
+---
+
+### 3. Create a `.env` file
 
 ```env
 JWT_SECRET=your_jwt_secret
@@ -45,22 +56,24 @@ DATABASE_URL="postgresql://user:password@localhost:5432/dbname"
 
 You can use the sample in `.env.example` if available.
 
-### 3. Run with Docker
+---
 
-Make sure Docker is installed and running, then:
+### 4. Run the app using Docker
+
+Make sure Docker is running, then:
 
 ```bash
 docker-compose up --build
 ```
 
 This will:
-- Start PostgreSQL in a container
-- Start the Node.js app in another container
-- Connect both via shared network
+- Start a PostgreSQL container
+- Start the Node.js app container
+- Link both using a shared network
 
-### 4. Apply database migration
+---
 
-If you need to run migrations manually:
+### 5. Apply database migration (if needed)
 
 ```bash
 npx prisma migrate dev
@@ -111,8 +124,22 @@ All routes require `Authorization: Bearer <token>` unless otherwise noted.
 
 ---
 
+## Dependencies Explained
+
+- **express** – Node.js web framework for routing and middleware
+- **jsonwebtoken** – For issuing and verifying access tokens
+- **bcrypt** – For hashing user passwords (if implemented)
+- **prisma** – Modern ORM for SQL databases
+- **@prisma/client** – Auto-generated client from Prisma schema
+- **dotenv** – Loads environment variables from `.env` file
+- **cors** – Handles cross-origin requests
+- **nodemon (dev)** – Auto-restarts the server on file changes
+
+---
+
 ## Notes
 
 - JWT tokens are required to access any `/todos` routes
-- Passwords are hashed and stored securely (if implemented)
-- You can extend the schema to support deadlines, tags, or priorities
+- You can expand the schema with fields like `completed`, `dueDate`, or `priority`
+- Data is persistent as long as the database volume exists in Docker
+
