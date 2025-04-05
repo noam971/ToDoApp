@@ -73,7 +73,21 @@ This will:
 
 ---
 
-### 5. Apply database migration (if needed)
+### 5. Access the running application
+
+Once the containers are up, your backend API will be available at:
+
+```
+http://localhost:5003
+```
+
+You can test the endpoints using:
+- Tools like **Postman**, **curl**
+- Or the included `todo-app.rest` file (with the REST Client extension in VS Code)
+
+---
+
+### 6. Apply database migration (if needed)
 
 ```bash
 npx prisma migrate dev
@@ -143,3 +157,26 @@ All routes require `Authorization: Bearer <token>` unless otherwise noted.
 - You can expand the schema with fields like `completed`, `dueDate`, or `priority`
 - Data is persistent as long as the database volume exists in Docker
 
+
+---
+
+### 7. Stopping the application
+
+To stop the backend server and PostgreSQL database:
+
+```bash
+docker-compose down
+```
+
+This command will:
+- Gracefully shut down both containers
+- Remove the app and DB containers
+- Preserve the database volume (unless configured otherwise)
+
+If you want to remove **everything**, including volumes and networks:
+
+```bash
+docker-compose down -v
+```
+
+Use this with caution — it will delete your local database data.
